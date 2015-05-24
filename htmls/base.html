@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ title }}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Jephthah M. Orobia" />
+    
+    
+  <!-- Bootsrap development -- delete on deploy
+!-->
+  <link rel="stylesheet" href="/fw/bootstrap/css/bootstrap.min.css" />
+  
+  
+  <link rel="stylesheet/less" type="text/css" href="less/typography.less" />
+  <link rel="stylesheet/less" type="text/css" href="less/layout.less" />
+    
+  <link rel="stylesheet" href="css/layout.css" />
+  
+  <!-- Bootstrap PRODUCTION CSS --uncomment this on deployment
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  !-->
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Teacher's Sched Maker</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="about">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ user_login_url }}"><span><span class="glyphicon glyphicon-user"></span> Log In or Register</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    
+    
+<div>
+{% block body %}
+{% endblock %}
+
+    <div class="footer">
+        <ul>
+            <li>Teacher's Sched Maker &copy; 2015 Jephthah M. Orobia</li>
+        </ul>
+        <ul>
+            <li>Terms</li>
+            <li>Privacy</li>
+            <li>Contact</li>
+        </ul>
+    </div>
+</div>
+
+
+
+<!-- Development Files
+    !-->
+    <script src="/fw/jquery.min.js"></script>
+    <script src="/fw/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/fw/less.min.js"></script>
+
+    
+
+<!-- PRODUCTION FILES --uncomment this on deployment
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.min.js"></script>
+    !-->
+</body>
+</html>

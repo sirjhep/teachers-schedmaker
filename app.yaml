@@ -6,12 +6,45 @@ threadsafe: yes
 
 handlers:
 - url: /favicon\.ico
-  static_files: favicon.ico
+  static_files: favicon.png
   upload: favicon\.ico
+
+- url: /images
+  static_dir: static/images
+
+- url: /images/(.*)
+  static_files: static_files/images/\1
+  upload: static_files/images/(.*)
+
+- url: /css
+  static_dir: static_files/css
+  
+- url: /less
+  static_dir: static_files/less
+
+- url: /js
+  static_dir: static_files/js
+  
+- url: /fw
+  static_dir: static_files/frameworks
+
+- url: /dev
+  static_dir: DO_NOT_COPY
+
+- url: /admin
+  script: admin.app
+  login: admin
+
+- url: /home
+  script: home.app
+  login: required
 
 - url: .*
   script: main.app
-
+  
 libraries:
 - name: webapp2
-  version: "2.5.2"
+  version: latest
+
+- name: jinja2
+  version: latest
