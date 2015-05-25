@@ -32,8 +32,15 @@ class NewSY(Handler):
         
         self.next("sy/"+str(sy.id()))
 
+class viewSY(Handler):
+    def get(self, sysid):
+        sy = SY.get_by_id(int(sysid))
+        self.render("sy.html",
+                    sy = sy,
+                    sys = self.sys)
 
 app = webapp2.WSGIApplication([
     ('/', Home),
-    ('/new-sy', NewSY)
+    ('/new-sy', NewSY),
+    ('/sy/([^/]+)?', viewSY)
 ], debug=True)
