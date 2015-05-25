@@ -12,3 +12,6 @@ $RECYCLE.BIN/
 
 # Python compiled files.
 *.pyc
+
+# App Engine Indexing File. This is automated so there is no need.
+index.yaml
