@@ -33,14 +33,47 @@ class NewSY(Handler):
         self.next("sy/"+str(sy.id()))
 
 class viewSY(Handler):
-    def get(self, sysid):
-        sy = SY.get_by_id(int(sysid))
+    def get(self, syid):
+        sy = SY.get_by_id(int(syid))
         self.render("sy.html",
                     sy = sy,
+                    sys = self.sys)
+
+class NewSection(Handler):
+    def get(self, syid):
+        sy = SY.get_by_id(int(syid))
+        self.render("new-section.html", 
+                    sy = sy,
+                    sys = self.sys)
+
+class NewTeacher(Handler):
+    def get(self, syid):
+        sy = SY.get_by_id(int(syid))
+        self.render("new-teachers.html",
+                    sy = sy,
+                    sys = self.sys)
+
+    def post(self, syid):
+        sy = SY.get_by_id(int(syid))
+        name = self.request.get("name")
+        teacher = Teacher(name=name, parent=sy.key).put()
+        self.next('/teacher/'+str(sy)+'/teacher/'+str(teacher.id()))
+
+class viewTeacher(Handler):
+    def get(self, syid, tid):
+        sy = SY.get_by_id(int(syid))
+        teacher = Teacher.get_by_id(int(tid))
+        self.render("teacher.html",
+                    sy = sy,
+                    teacher=teacher,
                     sys = self.sys)
 
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/new-sy', NewSY),
-    ('/sy/([^/]+)?', viewSY)
+    ('/sy/(\d+)?', viewSY),
+    ('/teacher/(\d+)?', viewTeacher),
+    ('/sy/(\d+)?/new-section', NewSection),
+    ('/sy/(\d+)?/new-teacher', NewTeacher),
+    ('/sy/(\d+)?/teacher/(\d+)?', viewTeacher)
 ], debug=True)

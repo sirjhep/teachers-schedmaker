@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <form method="post">
+        <p>
+        <label for="lvl">Grade Level: 
+            <input type="text" name="lvl" placeholder="Ex: 7" />
+        </label>
+        </p>
+        <p>
+        <label for="schoolname">Name of Section
+            <input type="text" name="schoolname" placeholder="Ex: Diamond" />
+        </label>
+        </p>
+        {% if teachers %}
+        <p>
+        <label for="adviser">Adviser: <select name="adviser">
+            {% for teacher in teachers %}
+                <option value="{{ teacher.key.id() }}">teacher.name</option>
+            {% endfor %}
+            </select></label></p>
+        {% endif %}
+        <p>
+        <input type="submit" value="Submit" />
+        </p>
+    </form>
+
+{% endblock %}

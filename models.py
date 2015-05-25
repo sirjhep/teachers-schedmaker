@@ -36,7 +36,7 @@ class Teacher(ndb.Model):
     """ All info about a teacher """
     
     # Name, in any format.
-    name = ndb.StringProperty()
+    name = ndb.StringProperty(required=True)
     
     # Id of Subjects being taught
     scheds = ndb.IntegerProperty(repeated=True)
