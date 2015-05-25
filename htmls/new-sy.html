@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <form method="post">
+        <p>
+        <label for="startyr">Start of SY: 
+            <input type="number" name="startyr" placeholder="YYYY" />
+        </label>
+        </p>
+        <p>
+        <label for="endyr">End of SY: 
+            <input type="number" name="endyr" placeholder="YYYY" />
+        </label>
+        </p>
+        <p>
+        <label for="schoolname">Name of School
+            <input type="text" name="schoolname" placeholder="Ex: Cabangan HS" />
+        </label>
+        </p>
+        <p>
+        <input type="submit" value="Submit" />
+        </p>
+    </form>
+
+{% endblock %}

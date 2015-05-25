@@ -1,3 +1,47 @@
 body{
     margin-top: 50px;
 }
+
+.navbar{
+    background-color: coral;
+    border: 0px;
+}
+
+
+div.main_container{
+    background-color: azure;
+    min-height: 80vh;
+}
+
+.left-sidebar{
+    position: fixed;
+    left: 0px;
+    top: 50px;
+    bottom: 50px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid gray;
+}
+
+.right-container{
+    position: absolute;
+    right: 0px;
+    left: 300px;
+    top: 50px;
+    bottom: 50px;
+}
+footer{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    height: 50px;
+    background-color: coral;
+    padding: 5px 30px;
+    z-index: 900;
+}
+
+footer > ul, footer > ul > li{
+    display: inline;
+    list-style: none;
+}

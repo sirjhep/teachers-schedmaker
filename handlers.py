@@ -4,6 +4,7 @@ import os
 import jinja2
 import urllib, urllib2
 from google.appengine.api import users
+from models import *
 
 TEMP_DIR = os.path.join(os.path.dirname(__file__), 'htmls')
 
@@ -16,10 +17,12 @@ OAUTH_CLIENTSECRET = "iljnKdWzMB2ksu2VQC9at4rT"
 class Handler(webapp2.RequestHandler):
     """Handler
         This handler will be the base of all Handlers.
-        This makes sure that before anything else, the user is check if he is logged in or not then set class variable `is_login`
-        If log-in, userinfo is stored in class variable `user`
         This handler will also define function `render`, that will render jinja templates
     """
+    
+    def __init__(self, request, response):
+        self.initialize(request, response)
+        self.sys = SY.query()
 
     def write(self, *a, **kw):
         """Helper function for rendering htmls"""

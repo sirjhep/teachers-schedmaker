@@ -1,0 +1,8 @@
+body{
+    color: darkslateblue;
+    font-family: fantasy;
+}
+
+.navbar-inverse .navbar-nav > li > a,  .navbar-inverse .navbar-brand, footer{
+    color: aliceblue;
+}

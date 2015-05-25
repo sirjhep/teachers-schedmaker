@@ -1,5 +1,13 @@
 from google.appengine.ext import ndb
 
+class SY(ndb.Model):
+    startyr = ndb.StringProperty(required=True)
+    endyr = ndb.StringProperty(required=True)
+    school_name = ndb.StringProperty()
+    
+    def display(self):
+        return str(self.startyr) + " - " + str(self.endyr)
+
 class Sched(ndb.Model):
     """ Except for `day` and `level`, everything should be the Id of that specific ndb Model."""
     
