@@ -51,8 +51,8 @@
                 <a href="new-sy" class="btn btn-primary">New S.Y.</a>
             </div>
             <div id="sys" class="panel-body collapse">
-                {% for sy in schyrs %}
-                    <a href="sy/{{ sy.id() }}">{{ sy.display() }}</a>
+                {% for sy in sys %}
+                    <a href="sy/{{ sy.key.id() }}">{{ sy.display() }}</a>
                 {% endfor %}
             </div>
         </div>
