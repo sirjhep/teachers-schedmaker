@@ -24,7 +24,7 @@ class Handler(webapp2.RequestHandler):
         self.initialize(request, response)
         self.sys = SY.query()
         self.teachers = Teacher.query()
-        self.classes = Section.query()
+        self.classes = Classes.query()
 
     def write(self, *a, **kw):
         """Helper function for rendering htmls"""

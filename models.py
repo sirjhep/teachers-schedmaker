@@ -20,8 +20,8 @@ class Sched(ndb.Model):
     # To what level
     level = ndb.IntegerProperty()
     
-    # To what section
-    section = ndb.IntegerProperty()
+    # To what Class
+    Class = ndb.IntegerProperty()
     
     # The time of the day the subject will be taught
     # This cannot be changed once created
@@ -51,7 +51,7 @@ class Subject(ndb.Model):
     abrev = ndb.StringProperty(required=True) #Example: SCI
     level = ndb.IntegerProperty(required=True)
 
-class Section(ndb.Model):
+class Classes(ndb.Model):
     name = ndb.StringProperty(required=True)
     level = ndb.IntegerProperty(required=True)
     adviser = ndb.IntegerProperty() # key of Teacher
