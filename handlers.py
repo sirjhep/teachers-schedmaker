@@ -23,6 +23,7 @@ class Handler(webapp2.RequestHandler):
     def __init__(self, request, response):
         self.initialize(request, response)
         self.sys = SY.query()
+        self.teachers = Teacher.query()
 
     def write(self, *a, **kw):
         """Helper function for rendering htmls"""
