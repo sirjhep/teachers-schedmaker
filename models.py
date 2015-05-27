@@ -51,7 +51,7 @@ class Subject(ndb.Model):
     abrev = ndb.StringProperty(required=True) #Example: SCI
     level = ndb.IntegerProperty(required=True)
 
-class Classes(ndb.Model):
+class Class(ndb.Model):
     name = ndb.StringProperty(required=True)
     level = ndb.IntegerProperty(required=True)
     adviser = ndb.IntegerProperty() # key of Teacher

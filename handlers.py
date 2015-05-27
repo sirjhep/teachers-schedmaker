@@ -11,9 +11,6 @@ TEMP_DIR = os.path.join(os.path.dirname(__file__), 'htmls')
 JINJA = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMP_DIR),
                        autoescape=True)
 
-OAUTH_CLIENTID = "276925555487-ddj29ujtf20e2sljoarktk4cccjikgf3.apps.googleusercontent.com"
-OAUTH_CLIENTSECRET = "iljnKdWzMB2ksu2VQC9at4rT"
-
 class Handler(webapp2.RequestHandler):
     """Handler
         This handler will be the base of all Handlers.
@@ -23,8 +20,6 @@ class Handler(webapp2.RequestHandler):
     def __init__(self, request, response):
         self.initialize(request, response)
         self.sys = SY.query()
-        self.teachers = Teacher.query()
-        self.classes = Classes.query()
 
     def write(self, *a, **kw):
         """Helper function for rendering htmls"""

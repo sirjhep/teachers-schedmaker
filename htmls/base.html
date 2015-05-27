@@ -52,9 +52,11 @@
                 <a href="new-sy" class="btn btn-primary">+ New S.Y.</a>
             </div>
             <div id="sys" class="panel-body collapse">
+                <ul>
                 {% for sy in sys %}
-                    <a href="sy/{{ sy.key.id() }}">{{ sy.display() }}</a>
+                    <li></li><a href="sy/{{ sy.key.id() }}">{{ sy.display() }}</a></li>
                 {% endfor %}
+                </ul>
             </div>
         </div>
         {% if sy %}
@@ -65,9 +67,11 @@
                 <a href="{{ sy.key.id() }}/new-teacher" class="btn btn-primary">+ New Teacher</a>
             </div>
             <div id="teachers" class="panel-body collapse">
+                <ul>
                 {% for teacher in teachers %}
-                    <a href="{{ sy.key.id() }}/teacher/{{ sect.key.id() }}">{{ sect.name }}</a>
+                    <li><a href="{{ sy.key.id() }}/teacher/{{ teacher.key.id() }}">{{ teacher.name }}</a></li>
                 {% endfor %}
+                </ul>
             </div>
         </div>
         
@@ -79,9 +83,13 @@
             <div id="sections" class="panel-body collapse">
                 {% for lvl in levels %}
                     <h4>Grae {{ lvl }}</h4>
+                    <ul>
                     {% for sect in levels[lvl] %}
+                        <li>
                         <a href="{{ sy.key.id() }}/section/{{ sect.key.id() }}">{{ sect.name }}</a>
+                        </li>
                     {% endfor %}
+                    </ul>
                 {% endfor %}
             </div>
         </div>

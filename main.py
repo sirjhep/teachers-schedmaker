@@ -35,29 +35,52 @@ class NewSY(Handler):
 class viewSY(Handler):
     def get(self, syid):
         sy = SY.get_by_id(int(syid))
+        levels = {7: Class.query(ancestor = sy.key, level==7),
+                  8: Class.query(ancestor = sy.key, level==8),
+                  9: Class.query(ancestor = sy.key, level==9),
+                  10: Class.query(ancestor = sy.key, level==10)}
         self.render("sy.html",
                     sy = sy,
-                    sys = self.sys)
+                    sys = self.sys,
+                    teachers = Teacher.query(ancestor = sy.key),
+                    levels = levels)
 
 class NewSection(Handler):
     def get(self, syid):
         sy = SY.get_by_id(int(syid))
+        levels = {7: Class.query(ancestor = sy.key, level == 7),
+                  8: Class.query(ancestor = sy.key, level == 8),
+                  9: Class.query(ancestor = sy.key, level == 9),
+                  10: Class.query(ancestor = sy.key, level == 10)}
         self.render("new-section.html", 
                     sy = sy,
-                    sys = self.sys)
+                    sys = self.sys,
+                    teachers = Teacher.query(ancestor = sy.key),
+                    levels = levels)
+
+    def post(self, syid):
+        sy = SY.get_by_id(int(syid))
+        name = self.request.get('name')
+        level = self.request.get('level')
+        section = Class(name=name, level=level, parent=sy.key).put()
+        self.next('/sy/'+str(sy.key.id())+'/classes/'+str(section.id()))
 
 class NewTeacher(Handler):
     def get(self, syid):
         sy = SY.get_by_id(int(syid))
+        teachers = Teacher.query(ancestor = sy.key)
+        classes = Class.query(ancestor = sy.key)
         self.render("new-teachers.html",
                     sy = sy,
-                    sys = self.sys)
+                    sys = self.sys,
+                    teachers = teachers,
+                    classes = classes)
 
     def post(self, syid):
         sy = SY.get_by_id(int(syid))
         name = self.request.get("name")
         teacher = Teacher(name=name, parent=sy.key).put()
-        self.next('/teacher/'+str(sy)+'/teacher/'+str(teacher.id()))
+        self.next('/sy/'+str(sy.key.id())+'/teacher/'+str(teacher.id()))
 
 class viewTeacher(Handler):
     def get(self, syid, tid):
@@ -73,7 +96,7 @@ app = webapp2.WSGIApplication([
     ('/new-sy', NewSY),
     ('/sy/(\d+)?', viewSY),
     ('/teacher/(\d+)?', viewTeacher),
-    ('/sy/(\d+)?/new-section', NewSection),
+    ('/sy/(\d+)?/new-classes', NewSection),
     ('/sy/(\d+)?/new-teacher', NewTeacher),
     ('/sy/(\d+)?/teacher/(\d+)?', viewTeacher)
 ], debug=True)
