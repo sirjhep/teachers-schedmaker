@@ -63,10 +63,12 @@ class Handler(webapp2.RequestHandler):
         self.write("<script>console.log('" + message + "');</script>")
 
     def getLevels(self, sy):
-        return {7: Class.query(ancestor = sy.key, filters=(Class.level == 7)),
-                  8: Class.query(ancestor = sy.key, filters=(Class.level == 8)),
-                  9: Class.query(ancestor = sy.key, filters=(Class.level == 9)),
-                  10: Class.query(ancestor = sy.key, filters=(Class.level == 10))}
+        levels = {}
+        for i in range(0, 13):
+            fori = Class.query(ancestor = sy.key, filters=(Class.level == i))
+            if fori.count() is not 0:
+                levels[i]=fori
+        return levels
     
     def getTeachers(self, sy):
         return Teacher.query(ancestor=sy.key)

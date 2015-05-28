@@ -81,14 +81,16 @@
                 <a href="/new-class?id={{ sy.key.id() }}" class="btn btn-primary">+ New Class</a>
             </div>
             <div id="sections" class="panel-body collapse">
-                {% for lvl in levels %}
-                    <h5>Grade {{ lvl }}</h5>
-                    <ul>
-                    {% for sect in levels[lvl] %}
-                        <li>
-                        <a href="/class?id={{ sect.key.id() }}&parent={{ sy.key.id() }}">{{ sect.name }}</a>
-                        </li>
-                    {% endfor %}
+                {% for lvl in range(0,13) %}
+                    {% if levels[lvl] %}
+                        <h5>Grade {{ lvl }}</h5>
+                        <ul>
+                        {% for sect in levels[lvl] %}
+                            <li>
+                            <a href="/class?id={{ sect.key.id() }}&parent={{ sy.key.id() }}">{{ sect.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                     </ul>
                 {% endfor %}
             </div>
