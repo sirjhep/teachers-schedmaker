@@ -101,11 +101,13 @@
     <div class="right-container">
         <ol class="breadcrumb">
             {% block breadcrum %}
-            <li class="active"><a href="..">Home</a></li>
+                <li class="active"><a href="..">Home</a></li>
             {% endblock %}
         </ol>
+        <div class="main">
         {% block body %}
         {% endblock %}
+        </div>
    </div>
 </div>
 

@@ -17,7 +17,7 @@ div.main_container > div{
     top: 50px;
     bottom: 50px;
     position: fixed;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .left-sidebar{
@@ -31,7 +31,14 @@ div.main_container > div{
     position: absolute;
     right: 0px;
     left: 300px;
-    padding: 8px 10px;
+}
+
+.main{
+    margin: 20px 20px 20px 20px;
+}
+
+.breadcrumb{
+    background-color: beige;
 }
 
 footer{

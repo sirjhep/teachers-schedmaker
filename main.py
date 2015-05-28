@@ -36,6 +36,7 @@ class viewSY(Handler):
     def get(self):
         sy = SY.get_by_id(int(self.request.get('id')))
         self.render("sy.html",
+                    title=sy.display(),
                     sy = sy,
                     sys = self.sys,
                     teachers = Teacher.query(ancestor = sy.key),
@@ -45,6 +46,7 @@ class NewClass(Handler):
     def get(self):
         sy = SY.get_by_id(int(self.request.get('id')))
         self.render("new-class.html", 
+                    title=sy.display() + ' - New Class',
                     sy = sy,
                     sys = self.sys,
                     teachers = Teacher.query(ancestor=sy.key),
@@ -66,6 +68,7 @@ class viewClass(Handler):
         sy = SY.get_by_id(int(self.request.get('parent')))
         myclass = Class.get_by_id(int(self.request.get('id')), parent=sy.key)
         self.render("class.html",
+                    title=sy.display() + ' (Grade ' + str(myclass.level) + ' - ' + myclass.name + ')',
                     sys = self.sys,
                     levels = self.getLevels(sy),
                     teachers = self.getTeachers(sy),
@@ -76,6 +79,7 @@ class NewTeacher(Handler):
     def get(self):
         sy = SY.get_by_id(int(self.request.get('id')))
         self.render("new-teachers.html",
+                    title=sy.display() + ' - New Teacher ',
                     sys = self.sys,
                     teachers = self.getTeachers(sy),
                     levels = self.getLevels(sy),
@@ -92,6 +96,7 @@ class viewTeacher(Handler):
         sy = SY.get_by_id(int(self.request.get('parent')))
         teacher = Teacher.get_by_id(int(self.request.get('id')), parent = sy.key)
         self.render("teacher.html",
+                    title=sy.display() + teacher.name,
                     sys = self.sys,
                     teachers = self.getTeachers(sy),
                     levels = self.getLevels(sy),
