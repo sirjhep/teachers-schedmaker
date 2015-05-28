@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "sy.html" %}
 
 {% block body %}
     <form method="post">
@@ -15,8 +15,9 @@
         {% if teachers %}
         <p>
         <label for="adviser">Adviser: <select name="adviser">
+                <option selected=selected>--</option>
             {% for teacher in teachers %}
-                <option value="{{ teacher.key.id() }}">teacher.name</option>
+                <option value="{{ teacher.key.id() }}">{{teacher.name}}</option>
             {% endfor %}
             </select></label></p>
         {% endif %}

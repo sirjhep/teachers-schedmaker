@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block breadcrum %}
+    <li><a href="../..">Home</a></li>
+    <li class="active">{{ sy.display() }}</a></li>
+{% endblock %}
+
 {% block body %}
     <h1>{{ sy.display() }} <small>{{ sy.key.id() }}</small></h1>
     <p>Some Content here...</p>

@@ -6,6 +6,8 @@ class SY(ndb.Model):
     school_name = ndb.StringProperty()
     
     def display(self):
+        if self.school_name:
+            return self.school_name+' (' + str(self.startyr) + " - " + str(self.endyr) + ')'
         return str(self.startyr) + " - " + str(self.endyr)
 
 class Sched(ndb.Model):
@@ -55,6 +57,7 @@ class Class(ndb.Model):
     name = ndb.StringProperty(required=True)
     level = ndb.IntegerProperty(required=True)
     adviser = ndb.IntegerProperty() # key of Teacher
+    
 
 class TimeOD(ndb.Model):
     start = ndb.StringProperty(required=True)

@@ -30,73 +30,81 @@ class NewSY(Handler):
             sy = SY(startyr=startyr,
                     endyr=endyr).put()
         
-        self.next("sy/"+str(sy.id()))
+        self.next("sy?id="+str(sy.id()))
 
 class viewSY(Handler):
-    def get(self, syid):
-        sy = SY.get_by_id(int(syid))
-        levels = {7: Class.query(ancestor = sy.key, level==7),
-                  8: Class.query(ancestor = sy.key, level==8),
-                  9: Class.query(ancestor = sy.key, level==9),
-                  10: Class.query(ancestor = sy.key, level==10)}
+    def get(self):
+        sy = SY.get_by_id(int(self.request.get('id')))
         self.render("sy.html",
                     sy = sy,
                     sys = self.sys,
                     teachers = Teacher.query(ancestor = sy.key),
-                    levels = levels)
+                    levels = self.getLevels(sy))
 
-class NewSection(Handler):
-    def get(self, syid):
-        sy = SY.get_by_id(int(syid))
-        levels = {7: Class.query(ancestor = sy.key, level == 7),
-                  8: Class.query(ancestor = sy.key, level == 8),
-                  9: Class.query(ancestor = sy.key, level == 9),
-                  10: Class.query(ancestor = sy.key, level == 10)}
-        self.render("new-section.html", 
+class NewClass(Handler):
+    def get(self):
+        sy = SY.get_by_id(int(self.request.get('id')))
+        self.render("new-class.html", 
                     sy = sy,
                     sys = self.sys,
-                    teachers = Teacher.query(ancestor = sy.key),
-                    levels = levels)
+                    teachers = Teacher.query(ancestor=sy.key),
+                    levels = self.getLevels(sy))
 
-    def post(self, syid):
-        sy = SY.get_by_id(int(syid))
+    def post(self):
+        sy = SY.get_by_id(int(self.request.get('id')))
         name = self.request.get('name')
-        level = self.request.get('level')
-        section = Class(name=name, level=level, parent=sy.key).put()
-        self.next('/sy/'+str(sy.key.id())+'/classes/'+str(section.id()))
+        level = int(self.request.get('lvl'))
+        adviser = self.request.get('adviser')
+        if adviser:
+            newClass = Class(parent=sy.key, name=name, level=level, adviser=int(adviser)).put()
+        else:
+            newClass = Class(parent=sy.key, name=name, level=level).put()
+        self.next('class?id='+str(newClass.id())+'&parent='+str(sy.key.id()))
+
+class viewClass(Handler):
+    def get(self):
+        sy = SY.get_by_id(int(self.request.get('parent')))
+        myclass = Class.get_by_id(int(self.request.get('id')), parent=sy.key)
+        self.render("class.html",
+                    sys = self.sys,
+                    levels = self.getLevels(sy),
+                    teachers = self.getTeachers(sy),
+                    sy = sy,
+                    myClass = myclass)
 
 class NewTeacher(Handler):
-    def get(self, syid):
-        sy = SY.get_by_id(int(syid))
-        teachers = Teacher.query(ancestor = sy.key)
-        classes = Class.query(ancestor = sy.key)
+    def get(self):
+        sy = SY.get_by_id(int(self.request.get('id')))
         self.render("new-teachers.html",
-                    sy = sy,
                     sys = self.sys,
-                    teachers = teachers,
-                    classes = classes)
+                    teachers = self.getTeachers(sy),
+                    levels = self.getLevels(sy),
+                    sy = sy)
 
-    def post(self, syid):
-        sy = SY.get_by_id(int(syid))
+    def post(self):
+        sy = SY.get_by_id(int(self.request.get('id')))
         name = self.request.get("name")
         teacher = Teacher(name=name, parent=sy.key).put()
-        self.next('/sy/'+str(sy.key.id())+'/teacher/'+str(teacher.id()))
+        self.next('teacher?id='+str(teacher.id())+'&parent='+str(sy.key.id()))
 
 class viewTeacher(Handler):
-    def get(self, syid, tid):
-        sy = SY.get_by_id(int(syid))
-        teacher = Teacher.get_by_id(int(tid))
+    def get(self):
+        sy = SY.get_by_id(int(self.request.get('parent')))
+        teacher = Teacher.get_by_id(int(self.request.get('id')), parent = sy.key)
         self.render("teacher.html",
+                    sys = self.sys,
+                    teachers = self.getTeachers(sy),
+                    levels = self.getLevels(sy),
                     sy = sy,
-                    teacher=teacher,
-                    sys = self.sys)
+                    teacher = teacher)
+
 
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/new-sy', NewSY),
-    ('/sy/(\d+)?', viewSY),
-    ('/teacher/(\d+)?', viewTeacher),
-    ('/sy/(\d+)?/new-classes', NewSection),
-    ('/sy/(\d+)?/new-teacher', NewTeacher),
-    ('/sy/(\d+)?/teacher/(\d+)?', viewTeacher)
+    ('/sy', viewSY),
+    ('/new-class', NewClass),
+    ('/class', viewClass),
+    ('/new-teacher', NewTeacher),
+    ('/teacher', viewTeacher)
 ], debug=True)

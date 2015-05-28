@@ -61,3 +61,12 @@ class Handler(webapp2.RequestHandler):
         TODO: replace this to be a log file instead of output on browser.
         """
         self.write("<script>console.log('" + message + "');</script>")
+
+    def getLevels(self, sy):
+        return {7: Class.query(ancestor = sy.key, filters=(Class.level == 7)),
+                  8: Class.query(ancestor = sy.key, filters=(Class.level == 8)),
+                  9: Class.query(ancestor = sy.key, filters=(Class.level == 9)),
+                  10: Class.query(ancestor = sy.key, filters=(Class.level == 10))}
+    
+    def getTeachers(self, sy):
+        return Teacher.query(ancestor=sy.key)

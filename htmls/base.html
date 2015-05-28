@@ -54,7 +54,7 @@
             <div id="sys" class="panel-body collapse">
                 <ul>
                 {% for sy in sys %}
-                    <li></li><a href="sy/{{ sy.key.id() }}">{{ sy.display() }}</a></li>
+                    <li><a href="sy?id={{ sy.key.id() }}">{{ sy.display() }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
@@ -64,12 +64,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <button class="btn btn-default" data-toggle="collapse" data-target="#teachers">Teachers</button>
-                <a href="{{ sy.key.id() }}/new-teacher" class="btn btn-primary">+ New Teacher</a>
+                <a href="/new-teacher?id={{sy.key.id()}}" class="btn btn-primary">+ New Teacher</a>
             </div>
             <div id="teachers" class="panel-body collapse">
                 <ul>
                 {% for teacher in teachers %}
-                    <li><a href="{{ sy.key.id() }}/teacher/{{ teacher.key.id() }}">{{ teacher.name }}</a></li>
+                    <li><a href="/teacher?id={{ teacher.key.id() }}&parent={{ sy.key.id() }}">{{ teacher.name }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
@@ -78,15 +78,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <button class="btn btn-default" data-toggle="collapse" data-target="#sections">Classes</button>
-                <a href="{{ sy.key.id() }}/new-section" class="btn btn-primary">+ New Class</a>
+                <a href="/new-class?id={{ sy.key.id() }}" class="btn btn-primary">+ New Class</a>
             </div>
             <div id="sections" class="panel-body collapse">
                 {% for lvl in levels %}
-                    <h4>Grae {{ lvl }}</h4>
+                    <h5>Grade {{ lvl }}</h5>
                     <ul>
                     {% for sect in levels[lvl] %}
                         <li>
-                        <a href="{{ sy.key.id() }}/section/{{ sect.key.id() }}">{{ sect.name }}</a>
+                        <a href="/class?id={{ sect.key.id() }}&parent={{ sy.key.id() }}">{{ sect.name }}</a>
                         </li>
                     {% endfor %}
                     </ul>
@@ -97,6 +97,11 @@
         {% endif %}
     </div>
     <div class="right-container">
+        <ol class="breadcrumb">
+            {% block breadcrum %}
+            <li class="active"><a href="..">Home</a></li>
+            {% endblock %}
+        </ol>
         {% block body %}
         {% endblock %}
    </div>

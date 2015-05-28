@@ -3,7 +3,7 @@ body{
 }
 
 .navbar{
-    background-color: coral;
+    background-color: deepskyblue;
     border: 0px;
 }
 
@@ -13,30 +13,34 @@ div.main_container{
     min-height: 80vh;
 }
 
-.left-sidebar{
-    position: fixed;
-    left: 0px;
+div.main_container > div{
     top: 50px;
     bottom: 50px;
+    position: fixed;
+    overflow-y: scroll;
+}
+
+.left-sidebar{
+    left: 0px;
     width: 300px;
     background-color: white;
-    border: 1px solid gray;
+    border-right: 1px solid gray;
 }
 
 .right-container{
     position: absolute;
     right: 0px;
     left: 300px;
-    top: 50px;
-    bottom: 50px;
+    padding: 8px 10px;
 }
+
 footer{
     position: absolute;
     left: 0px;
     bottom: 0px;
     right: 0px;
     height: 50px;
-    background-color: coral;
+    background-color: skyblue;
     padding: 5px 30px;
     z-index: 900;
 }
