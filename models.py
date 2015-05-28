@@ -58,6 +58,8 @@ class Class(ndb.Model):
     level = ndb.IntegerProperty(required=True)
     adviser = ndb.IntegerProperty() # key of Teacher
     
+    def display_adviser(self):
+        return Teacher.get_by_id(self.adviser, parent=self.key.parent()).name
 
 class TimeOD(ndb.Model):
     start = ndb.StringProperty(required=True)

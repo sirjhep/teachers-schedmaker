@@ -8,6 +8,6 @@
 
 {% block body %}
     <h1>{{ Class.level }} - {{ Class.name }} <small>#{{ Class.key.id() }}</small></h1>
-    {% if Class.adviser %} <p>Adviser: {{ Class.adviser }}</p> {% endif %}
+    {% if Class.adviser %} <p>Adviser: {{ Class.display_adviser() }}</p> {% endif %}
 
 {% endblock %}
