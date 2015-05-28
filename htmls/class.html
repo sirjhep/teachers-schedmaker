@@ -3,11 +3,11 @@
 {% block breadcrum %}
     <li><a href="../..">Home</a></li>
     <li>{{ sy.display() }}</a></li>
-    <li class="active">{{ myClass.name }}</a></li>
+    <li class="active">{{ Class.name }}</a></li>
 {% endblock %}
 
 {% block body %}
-    <h1>{{ myClass.level }} - {{ myClass.name }} <small>#{{ Class.key.id() }}</small></h1>
-    {% if myClass.adviser %} <p>Adviser: {{ Class.adviser }}</p> {% endif %}
+    <h1>{{ Class.level }} - {{ Class.name }} <small>#{{ Class.key.id() }}</small></h1>
+    {% if Class.adviser %} <p>Adviser: {{ Class.adviser }}</p> {% endif %}
 
 {% endblock %}

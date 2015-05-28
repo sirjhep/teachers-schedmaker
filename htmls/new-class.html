@@ -8,14 +8,14 @@
         </label>
         </p>
         <p>
-        <label for="schoolname">Name of Section
-            <input type="text" name="schoolname" placeholder="Ex: Diamond" />
+        <label for="name">Name of Section
+            <input type="text" name="name" placeholder="Ex: Diamond" />
         </label>
         </p>
         {% if teachers %}
         <p>
         <label for="adviser">Adviser: <select name="adviser">
-                <option selected=selected>--</option>
+                <option></option>
             {% for teacher in teachers %}
                 <option value="{{ teacher.key.id() }}">{{teacher.name}}</option>
             {% endfor %}

@@ -70,7 +70,7 @@ class viewClass(Handler):
                     levels = self.getLevels(sy),
                     teachers = self.getTeachers(sy),
                     sy = sy,
-                    myClass = myclass)
+                    Class = myclass)
 
 class NewTeacher(Handler):
     def get(self):
