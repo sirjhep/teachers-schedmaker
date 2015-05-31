@@ -96,6 +96,20 @@
             </div>
         </div>
         
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-default" data-toggle="collapse" data-target="#subjects">Subjects</button>
+                <a href="/new-subject?id={{sy.key.id()}}" class="btn btn-primary">+ New Subject</a>
+            </div>
+            <div id="subjects" class="panel-body collapse">
+                <ul>
+                {% for subj in subjects %}
+                    <li><a href="/subject?id={{ subj.key.id() }}&parent={{ sy.key.id() }}">{{ subj.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
         {% endif %}
     </div>
     <div class="right-container">
