@@ -8,14 +8,12 @@ from models import *
 class Home(Handler):
     def get(self):
         self.render("home.html",
-                    title="Teacher's Sched Maker",
-                    sys = self.sys)
+                    title="Teacher's Sched Maker")
 
 class NewSY(Handler):
     def get(self):            
         self.render("new-sy.html",
-                    title="Add new School Year",
-                    sys = self.sys)
+                    title="Add new School Year")
         
     def post(self):
         startyr = self.request.get("startyr")
@@ -36,21 +34,12 @@ class viewSY(Handler):
     def get(self):
         sy = SY.get_by_id(int(self.request.get('id')))
         self.render("sy.html",
-                    title=sy.display(),
-                    sy = sy,
-                    sys = self.sys,
-                    teachers = Teacher.query(ancestor = sy.key),
-                    levels = self.getLevels(sy))
+                    title=self.sy.display())
 
 class NewClass(Handler):
     def get(self):
-        sy = SY.get_by_id(int(self.request.get('id')))
         self.render("new-class.html", 
-                    title=sy.display() + ' - New Class',
-                    sy = sy,
-                    sys = self.sys,
-                    teachers = Teacher.query(ancestor=sy.key),
-                    levels = self.getLevels(sy))
+                    title=self.sy.display() + ' - New Class')
 
     def post(self):
         sy = SY.get_by_id(int(self.request.get('id')))
@@ -65,25 +54,13 @@ class NewClass(Handler):
 
 class viewClass(Handler):
     def get(self):
-        sy = SY.get_by_id(int(self.request.get('parent')))
-        myclass = Class.get_by_id(int(self.request.get('id')), parent=sy.key)
         self.render("class.html",
-                    title=sy.display() + ' (Grade ' + str(myclass.level) + ' - ' + myclass.name + ')',
-                    sys = self.sys,
-                    levels = self.getLevels(sy),
-                    teachers = self.getTeachers(sy),
-                    sy = sy,
-                    Class = myclass)
+                    title=self.sy.display() + ' (Grade ' + str(self.myclass.level) + ' - ' + self.myclass.name + ')')
 
 class NewTeacher(Handler):
     def get(self):
-        sy = SY.get_by_id(int(self.request.get('id')))
         self.render("new-teachers.html",
-                    title=sy.display() + ' - New Teacher ',
-                    sys = self.sys,
-                    teachers = self.getTeachers(sy),
-                    levels = self.getLevels(sy),
-                    sy = sy)
+                    title=self.sy.display() + ' - New Teacher ')
 
     def post(self):
         sy = SY.get_by_id(int(self.request.get('id')))
@@ -93,15 +70,8 @@ class NewTeacher(Handler):
 
 class viewTeacher(Handler):
     def get(self):
-        sy = SY.get_by_id(int(self.request.get('parent')))
-        teacher = Teacher.get_by_id(int(self.request.get('id')), parent = sy.key)
         self.render("teacher.html",
-                    title=sy.display() + teacher.name,
-                    sys = self.sys,
-                    teachers = self.getTeachers(sy),
-                    levels = self.getLevels(sy),
-                    sy = sy,
-                    teacher = teacher)
+                    title=self.sy.display() + self.teacher.name)
 
 
 app = webapp2.WSGIApplication([

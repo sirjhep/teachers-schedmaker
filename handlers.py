@@ -20,6 +20,24 @@ class Handler(webapp2.RequestHandler):
     def __init__(self, request, response):
         self.initialize(request, response)
         self.sys = SY.query()
+        id_get = self.request.get('id')
+        parent_get = self.request.get('parent')
+        self.sy = False
+        self.myclass = False
+        self.levels = False
+        self.teacher = False
+        self.teachers = False
+        if self.request.path in ['/', '/sy', '/new-teacher', 'new-class'] and id_get:
+            self.sy = SY.get_by_id(int(id_get))
+        elif self.request.path in ['/class', '/teacher'] and parent_get:
+            self.sy = SY.get_by_id(int(parent_get))
+        if self.sy:
+            self.levels = self.getLevels(self.sy)
+            self.teachers = Teacher.query(ancestor=self.sy.key)
+            if self.request.path == '/class':
+                self.myclass =  Class.get_by_id(int(id_get), parent=self.sy.key)
+            elif self.request.path == '/teacher' and id_get:
+                self.teacher = Teacher.get_by_id(int(id_get), parent=self.sy.key)
 
     def write(self, *a, **kw):
         """Helper function for rendering htmls"""
@@ -31,14 +49,21 @@ class Handler(webapp2.RequestHandler):
         t = JINJA.get_template(template)
         return t.render(params)
 
-    def render(self, tempalte, **kw):
+    def render(self, template, **kw):
         """This will render an html from a template with the given keywords
         Parameters:
             template (str): a string where the file template is found. location
             `title` keyword should always be defined.
             **kw: keywords that will be used by the template
         """
-        self.write(self.render_str(tempalte, **kw))
+        kws = {'sys': self.sys,
+              'sy': self.sy,
+              'levels': self.levels,
+              'teachers': self.teachers,
+              'Class': self.myclass,
+              'teacher': self.teacher}
+        kws.update(**kw)
+        self.write(self.render_str(template, **kws))
 
     def next(self, url):
         """This will replace the usual redirect method, whereas the redirection will now be conditional depending if  the user is login or not. Use this instead of ``.redirect``
@@ -69,6 +94,3 @@ class Handler(webapp2.RequestHandler):
             if fori.count() is not 0:
                 levels[i]=fori
         return levels
-    
-    def getTeachers(self, sy):
-        return Teacher.query(ancestor=sy.key)
