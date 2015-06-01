@@ -104,7 +104,7 @@
             <div id="subjects" class="panel-body collapse">
                 <ul>
                 {% for subj in subjects %}
-                    <li><a href="/subject?id={{ subj.key.id() }}&parent={{ sy.key.id() }}">{{ subj.name }}</a></li>
+                    <li><a href="/subject?id={{ subj.key.id() }}&parent={{ sy.key.id() }}">{{ subj.abrev }}</a></li>
                 {% endfor %}
                 </ul>
             </div>

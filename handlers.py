@@ -27,17 +27,22 @@ class Handler(webapp2.RequestHandler):
         self.levels = False
         self.teacher = False
         self.teachers = False
-        if self.request.path in ['/', '/sy', '/new-teacher', 'new-class'] and id_get:
+        self.subject = False
+        self.subjects = False
+        if self.request.path in ['/', '/sy', '/new-teacher', '/new-class', '/new-subject'] and id_get:
             self.sy = SY.get_by_id(int(id_get))
-        elif self.request.path in ['/class', '/teacher'] and parent_get:
+        elif self.request.path in ['/class', '/teacher', '/subject'] and parent_get:
             self.sy = SY.get_by_id(int(parent_get))
         if self.sy:
             self.levels = self.getLevels(self.sy)
             self.teachers = Teacher.query(ancestor=self.sy.key)
+            self.subjects = Subject.query(ancestor=self.sy.key)
             if self.request.path == '/class':
                 self.myclass =  Class.get_by_id(int(id_get), parent=self.sy.key)
             elif self.request.path == '/teacher' and id_get:
                 self.teacher = Teacher.get_by_id(int(id_get), parent=self.sy.key)
+            elif self.request.path == '/subject' and id_get:
+                self.subject = Subject.get_by_id(int(id_get), parent=self.sy.key)
 
     def write(self, *a, **kw):
         """Helper function for rendering htmls"""
@@ -60,8 +65,10 @@ class Handler(webapp2.RequestHandler):
               'sy': self.sy,
               'levels': self.levels,
               'teachers': self.teachers,
+              'subjects': self.subjects,
               'Class': self.myclass,
-              'teacher': self.teacher}
+              'teacher': self.teacher,
+              'subject': self.subject}
         kws.update(**kw)
         self.write(self.render_str(template, **kws))
 

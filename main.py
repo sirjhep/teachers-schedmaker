@@ -73,6 +73,24 @@ class viewTeacher(Handler):
         self.render("teacher.html",
                     title=self.sy.display() + self.teacher.name)
 
+class NewSubj(Handler):
+    def get(self):
+        self.render("new-subj.html",
+                    title=self.sy.display() + ' - New Subject ')
+
+    def post(self):
+        sy = SY.get_by_id(int(self.request.get('id')))
+        name = self.request.get("name")
+        abrev = self.request.get("abrev")
+        level = self.request.get("level")
+        subject = Subject(name=name, abrev=abrev, level = int(level), parent=sy.key).put()
+        self.next('subject?id='+str(subject.id())+'&parent='+str(sy.key.id()))
+
+class viewSubj(Handler):
+    def get(self):
+        self.render("subj.html",
+                    title= self.sy.display() + self.subject.abrev)
+
 
 app = webapp2.WSGIApplication([
     ('/', Home),
@@ -80,6 +98,8 @@ app = webapp2.WSGIApplication([
     ('/sy', viewSY),
     ('/new-class', NewClass),
     ('/class', viewClass),
+    ('/new-subject', NewSubj),
+    ('/subject', viewSubj),
     ('/new-teacher', NewTeacher),
     ('/teacher', viewTeacher)
 ], debug=True)

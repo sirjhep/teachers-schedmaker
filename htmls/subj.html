@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block breadcrum %}
+    <li><a href="../..">Home</a></li>
+    <li>{{ sy.display() }}</a></li>
+    <li class="active">{{ subject.abrev }}</a></li>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ subject.name }} - {{ subject.level }} <small>#{{ subject.key.id() }}</small></h1>
+    
+
+{% endblock %}
