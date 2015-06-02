@@ -9,5 +9,16 @@
 {% block body %}
     <h1>{{ Class.level }} - {{ Class.name }} <small>#{{ Class.key.id() }}</small></h1>
     {% if Class.adviser %} <p>Adviser: {{ Class.display_adviser() }}</p> {% endif %}
+    <h3>Weekly schedule</h3>
+    <table>
+        <thead>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+        </thead>
+    </table>
 
 {% endblock %}
