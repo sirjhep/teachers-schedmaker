@@ -50,13 +50,15 @@ class Teacher(ndb.Model):
 class Subject(ndb.Model):
     """ Subjects are always associated with level """
     name = ndb.StringProperty(required=True)
-    abrev = ndb.StringProperty(required=True) #Example: SCI
-    level = ndb.IntegerProperty(required=True)
+    abrev = ndb.StringProperty(required=True) #Ex: MATH for Mathematics
+    teachers = ndb.IntegerProperty(repeated=True)
 
 class Class(ndb.Model):
     name = ndb.StringProperty(required=True)
     level = ndb.IntegerProperty(required=True)
     adviser = ndb.IntegerProperty() # key of Teacher
+    withSaturday = ndb.BooleanProperty()
+    withSunday = ndb.BooleanProperty()
     
     def display_adviser(self):
         return Teacher.get_by_id(self.adviser, parent=self.key.parent()).name

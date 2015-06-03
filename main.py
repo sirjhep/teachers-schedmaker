@@ -46,10 +46,14 @@ class NewClass(Handler):
         name = self.request.get('name')
         level = int(self.request.get('lvl'))
         adviser = self.request.get('adviser')
+        withSat = self.request.get('withSaturday')
+        withSat = True if withSat == "on" else False
+        withSun = self.request.get('withSaunday')
+        withSun = True if withSun == "on" else False
         if adviser:
-            newClass = Class(parent=sy.key, name=name, level=level, adviser=int(adviser)).put()
+            newClass = Class(parent=sy.key, name=name, level=level, withSaturday=withSat, withSunday=withSun, adviser=int(adviser)).put()
         else:
-            newClass = Class(parent=sy.key, name=name, level=level).put()
+            newClass = Class(parent=sy.key, name=name, level=level, withSaturday=withSat, withSunday=withSun).put()
         self.next('class?id='+str(newClass.id())+'&parent='+str(sy.key.id()))
 
 class viewClass(Handler):
