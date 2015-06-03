@@ -10,7 +10,7 @@
     <h1>{{ Class.level }} - {{ Class.name }} <small>#{{ Class.key.id() }}</small></h1>
     {% if Class.adviser %} <p>Adviser: {{ Class.display_adviser() }}</p> {% endif %}
     <h3>Weekly schedule</h3>
-    <table>
+    <table id="the_class_sched">
         <thead>
             <th>Time</th>
             <th>Monday</th>
@@ -18,7 +18,23 @@
             <th>Wednesday</th>
             <th>Thursday</th>
             <th>Friday</th>
+            {% if Class.withSaturday %}<th>Saturday</th>{% endif %}
+            {% if Class.withSunday %}<th>Saturday</th>{% endif %}
         </thead>
+        <tr id="the_orig_row">
+            <td>6:00 AM to 7:00 PM</td>
+            {% for m in range(0, 5) %}
+                <td><select name="subject_m_{{m}}">
+                        <option></option>
+                        {% for subj in subjects %}
+                        <option value="{{subj.key.id()}}">{{subj.abrev}}</option>
+                        {% endfor %}
+                    </select></td>
+            {% endfor %}
+            {% if Class.withSaturday %}<td>Saturday</td>{% endif %}
+            {% if Class.withSunday %}<td>Saturday</td>{% endif %}
+            <td><i class="fa fa-plus"></i></td>
+        </tr>
     </table>
 
 {% endblock %}
