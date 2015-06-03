@@ -34,7 +34,7 @@ class Handler(webapp2.RequestHandler):
         elif self.request.path in ['/class', '/teacher', '/subject'] and parent_get:
             self.sy = SY.get_by_id(int(parent_get))
         if self.sy:
-            self.levels = self.getLevels(self.sy)
+            self.levels = self.getByLevels(self.sy, Class)
             self.teachers = Teacher.query(ancestor=self.sy.key)
             self.subjects = Subject.query(ancestor=self.sy.key)
             if self.request.path == '/class':
@@ -94,10 +94,10 @@ class Handler(webapp2.RequestHandler):
         """
         self.write("<script>console.log('" + message + "');</script>")
 
-    def getLevels(self, sy):
+    def getByLevels(self, sy, OfModel):
         levels = {}
         for i in range(0, 13):
-            fori = Class.query(ancestor = sy.key, filters=(Class.level == i))
+            fori = OfModel.query(ancestor = sy.key, filters=(OfModel.level == i))
             if fori.count() is not 0:
                 levels[i]=fori
         return levels
